@@ -112,6 +112,7 @@ def deploy_infrastructure():
 
     print(f"\n DESPLIEGUE COMPLETADO")
     print(f"WEB: http://{bucket_web}.s3-website-{REGION}.amazonaws.com/")
+    print(f"Items: http://{api_id}.execute-api.{REGION}.amazonaws.com/items")
 
 
 def teardown_infrastructure():
