@@ -5,6 +5,7 @@ Incluye ingesta de datos automática por CSV, API Serverless, Base de datos NoSQ
 
 ## Estructura del Proyecto
 
+```plaintext
 /
 ├── infrastructure/ # Scripts de automatización (Python + Boto3)
 │ ├── start.py # Script maestro (Deploy & Teardown)
@@ -20,6 +21,7 @@ Incluye ingesta de datos automática por CSV, API Serverless, Base de datos NoSQ
 │ ├── config # COnfiguración de la Regíon y Output
 │ └── credentials # Credenciales que tienes que substituir
 └── README.md # Este archivo
+```
 
 ## Requisitos Previos
 
