@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Welcome to the Caf&eacute;!</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      #inventory-container {
+        width: 60%;
+        margin: 20px auto;
+        text-align: center;
+        border: 2px solid #8b5a2b;
+        padding: 15px;
+        background-color: #fff8dc;
+        border-radius: 10px;
+      }
+      table.inventory {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      table.inventory th {
+        background-color: #8b5a2b;
+        color: white;
+        padding: 10px;
+      }
+      table.inventory td {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      table.inventory tr:hover {
+        background-color: #f5f5f5;
+      }
+    </style>
+  </head>
+
+  <body class="bodyStyle">
+    <div id="header" class="mainHeader">
+      <hr />
+      <div class="center">Caf&eacute;</div>
+    </div>
+    <br />
+
+    <div id="inventory-container">
+      <h2>📦 Live Inventory (Berlin)</h2>
+      <p id="loading-msg">Loading data from Cloud...</p>
+      <table class="inventory" id="inv-table" style="display: none">
+        <thead>
+          <tr>
+            <th>Product Item</th>
+            <th>Count Available</th>
+          </tr>
+        </thead>
+        <tbody id="inventory-body"></tbody>
+      </table>
+    </div>
+    <div id="mainContent">
+      <hr />
+      <div id="mainPictures" class="center">
+        <table>
+          <tr>
+            <td>
+              <img
+                src="images/Coffee-and-Pastries.png"
+                height="auto"
+                width="490"
+              />
+            </td>
+            <td>
+              <img src="images/Cake-Vitrine.png" height="auto" width="450" />
+            </td>
+          </tr>
+        </table>
+        <hr />
+        <p>
+          CHANGED-AGAIN The Caf&eacute; offers an assortment of delicious and
+          delectable pastries and coffees that will put a smile on your face.
+          From cookies to croissants, tarts and cakes, each treat is specially
+          prepared to excite your tastebuds and brighten your day!
+        </p>
+        <br />
+        <table>
+          <tr>
+            <td bgcolor="aquamarine">
+              <div class="cursiveText">
+                Frank bakes a rich variety of cookies. Try them all!
+              </div>
+              <table>
+                <tr>
+                  <td>
+                    <img src="images/Cookies.png" height="auto" width="300" />
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td bgcolor="orange">
+              <table>
+                <tr>
+                  <td>
+                    <img
+                      src="images/Cup-of-Hot-Chocolate.png"
+                      height="auto"
+                      width="200"
+                    />
+                  </td>
+                  <td class="cursiveText">
+                    Tea<br />Coffee<br />Latte<br />Hot Chocolate<br />Yes, we
+                    have it!
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td bgcolor="aquamarine">
+              <div class="cursiveText">
+                Our tarts are always a customer favorite!<br /><br />
+              </div>
+              <table>
+                <tr>
+                  <td>
+                    <img
+                      src="images/Strawberry-Tarts.png"
+                      height="auto"
+                      width="170"
+                    />
+                  </td>
+                  <td>
+                    <img
+                      src="images/Strawberry-&-Blueberry-Tarts.png"
+                      height="auto"
+                      width="170"
+                    />
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <hr />
+      </div>
+    </div>
+
+    <div id="aboutUs" class="center">
+      <hr />
+      <div>
+        <h2>About Us</h2>
+      </div>
+      <table>
+        <tr>
+          <td>
+            <img src="images/Cafe-Owners.png" height="auto" width="400" />
+          </td>
+          <td>
+            <p>
+              Frank and Martha have been adding sweetness to their customers's
+              lives since 2016. Both of them will personally greet you with a
+              welcoming smile when you visit! Frank's recipes have been passed
+              down from his mother and use simple and fresh ingredients to
+              produce delightful flavors.
+            </p>
+          </td>
+        </tr>
+      </table>
+      <hr />
+    </div>
+
+    <div id="ContactUs" align="center">
+      <hr />
+      <div>
+        <h2>Contact Us</h2>
+      </div>
+      <table>
+        <tr>
+          <td>
+            <img src="images/Coffee-Shop.png" height="auto" width="120" />
+          </td>
+        </tr>
+      </table>
+      <div>
+        <p>
+          123 Sweet Tooth St.<br />London SW1A 0AA, UK<br />Tel: +44-12-12345678
+        </p>
+      </div>
+      <div>
+        <h3>Hours</h3>
+      </div>
+      <div>
+        Weekdays: 6:00am - 6:00pm<br />Saturday: 7:00am - 7:00pm<br />Closed on
+        Sundays
+      </div>
+    </div>
+
+    <div id="Copyright" class="center">
+      <h5>
+        <p>
+          &copy; 2020, Amazon Web Services, Inc. or its Affiliates. All rights
+          reserved.
+        </p>
+      </h5>
+    </div>
+
+    <script>
+      const API_ENDPOINT = "REPLACE_ME_WITH_YOUR_INVOKE_URL/items";
+
+      async function loadInventory() {
+        try {
+          const response = await fetch(API_ENDPOINT);
+          const data = await response.json();
+
+          const tableBody = document.getElementById("inventory-body");
+          const loadingMsg = document.getElementById("loading-msg");
+          const table = document.getElementById("inv-table");
+
+          tableBody.innerHTML = "";
+
+          loadingMsg.style.display = "none";
+          table.style.display = "table";
+
+          data.forEach((row) => {
+            const tr = document.createElement("tr");
+
+            const tdItem = document.createElement("td");
+            tdItem.textContent = row.Item;
+
+            const tdCount = document.createElement("td");
+            tdCount.textContent = row.Count;
+            tdCount.style.fontWeight = "bold";
+
+            tr.appendChild(tdItem);
+            tr.appendChild(tdCount);
+            tableBody.appendChild(tr);
+          });
+        } catch (error) {
+          console.error("Error fetching inventory:", error);
+          document.getElementById("loading-msg").innerText =
+            "Error loading inventory. Check console.";
+          document.getElementById("loading-msg").style.color = "red";
+        }
+      }
+
+      window.onload = loadInventory;
+    </script>
+  </body>
+</html>
